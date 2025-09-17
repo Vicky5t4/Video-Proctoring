@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Proctoring — Focus & Object Detection</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">🎥 Proctor Lite </div>
+    <div class="controls">
+      <input id="candidateName" placeholder="Candidate Name" />
+      <button id="startBtn">Start Interview</button>
+      <button id="stopBtn" disabled>Stop</button>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="video-wrap">
+      <div class="video-stage">
+        <!--  Fix: autoplay + playsinline + muted added -->
+        <video id="video" autoplay playsinline muted></video>
+        <canvas id="overlay"></canvas>
+
+        <!-- Status chips -->
+        <div class="badges" id="badges">
+          <span class="chip ok" id="statusFocus">Focused</span>
+          <span class="chip" id="statusAway">Looking Away</span>
+          <span class="chip" id="statusNoFace">No Face</span>
+          <span class="chip" id="statusMulti">Multiple Faces</span>
+          <span class="chip" id="statusPhone">Phone</span>
+          <span class="chip" id="statusBook">Book/Notes</span>
+          <span class="chip" id="statusDevice">Extra Device</span>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="actions">
+        <button id="downloadVideoBtn" disabled>Download Video</button>
+        <button id="downloadCsvBtn" disabled>Download Events CSV</button>
+        <button id="downloadJsonBtn" disabled>Download Report JSON</button>
+        <button id="openPdfBtn" disabled>Open Printable Report</button>
+      </div>
+    </section>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <h3>Live Event Feed</h3>
+      <div id="feed" class="feed"></div>
+
+      <h3 class="mt">Session Summary</h3>
+      <div class="summary" id="summary">
+        <div><b>Candidate:</b> <span id="sumName">—</span></div>
+        <div><b>Session ID:</b> <span id="sumSid">—</span></div>
+        <div><b>Started:</b> <span id="sumStart">—</span></div>
+        <div><b>Duration:</b> <span id="sumDur">00:00</span></div>
+        <hr/>
+        <div><b>Focus Lost:</b> <span id="cntAway">0</span></div>
+        <div><b>No Face (10s):</b> <span id="cntNoFace">0</span></div>
+        <div><b>Multiple Faces:</b> <span id="cntMulti">0</span></div>
+        <div><b>Phone:</b> <span id="cntPhone">0</span></div>
+        <div><b>Book/Notes:</b> <span id="cntBook">0</span></div>
+        <div><b>Extra Devices:</b> <span id="cntDevice">0</span></div>
+        <hr/>
+        <div><b>Integrity Score:</b> <span id="score">100</span></div>
+      </div>
+    </aside>
+  </main>
+
+  <!-- TensorFlow + Models (CDN) -->
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.20.0/dist/tf.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/blazeface@0.0.7/dist/blazeface.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd@2.2.3"></script>
+
+  <!-- App Logic -->
+  <script defer src="./app.js"></script>
+</body>
+</html>
